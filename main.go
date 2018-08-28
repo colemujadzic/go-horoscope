@@ -32,6 +32,8 @@ var (
 )
 
 func init() {
+	signs := []string{"Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"}
+
 	// declare flags for consumer key & secret (hint: register for a developer account at Twitter to receive keys)
 	flag.StringVar(&twitterConsumerKey, "consumer-key", "", "Twitter consumer key")
 	flag.StringVar(&twitterConsumerSecret, "consumer-secret", "", "Twitter consumer secret")
@@ -64,7 +66,18 @@ func init() {
 	// get argumemnt
 	initialArgument := flag.Args()[0]
 
-	astroSign = initialArgument
+	// validate user input
+	for _, value := range signs {
+		if strings.EqualFold(initialArgument, value) == true {
+			astroSign = initialArgument
+			break
+		}
+	}
+	if astroSign == "" {
+		fmt.Println("Enter a valid astrological sign.")
+		os.Exit(1)
+	}
+
 }
 
 func main() {
