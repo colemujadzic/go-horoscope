@@ -18,7 +18,7 @@ import (
 const (
 	// BANNER ...
 	BANNER = `
-go-horoscope - Get your horoscope via the @poetastrologers (Astro Poets) twitter account
+go-horoscope - Get your horoscope via the @poetastrologers twitter account
 `
 )
 
@@ -41,6 +41,9 @@ func init() {
 	// print usage information when -h or -help flag is invoked
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr, fmt.Sprintf(BANNER))
+		fmt.Println()
+		fmt.Println("Usage:  go-horoscope [options] <sign>")
+		fmt.Println()
 		flag.PrintDefaults()
 	}
 
