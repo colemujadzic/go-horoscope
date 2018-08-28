@@ -32,16 +32,20 @@ var (
 )
 
 func init() {
+	// declare flags for consumer key & secret (hint: register for a developer account at Twitter to receive keys)
 	flag.StringVar(&twitterConsumerKey, "consumer-key", "", "Twitter consumer key")
 	flag.StringVar(&twitterConsumerSecret, "consumer-secret", "", "Twitter consumer secret")
 
+	// print usage information when -h or -help flag is invoked
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr, fmt.Sprintf(BANNER))
 		flag.PrintDefaults()
 	}
 
+	// parse flags
 	flag.Parse()
 
+	// check consumer key
 	if twitterConsumerKey == "" {
 		if twitterConsumerKey = os.Getenv("CONSUMER_KEY"); twitterConsumerKey == "" {
 			flag.PrintDefaults()
@@ -49,6 +53,7 @@ func init() {
 		}
 	}
 
+	// check consumer secret
 	if twitterConsumerSecret == "" {
 		if twitterConsumerSecret = os.Getenv("CONSUMER_SECRET"); twitterConsumerSecret == "" {
 			flag.PrintDefaults()
@@ -56,30 +61,23 @@ func init() {
 		}
 	}
 
+	// get argumemnt
 	initialArgument := flag.Args()[0]
-	// secondArgument := flag.Args()[1]
 
 	astroSign = initialArgument
 }
 
 func main() {
-	// we'll hardcode the twitter account to pull from (for now)
+	// we'll hardcode the twitter account to pull from (for now) and the number of tweets to query
 	twitterAccount = "poetastrologers"
 	numTweets = "100"
 
-	// ttime := time.Now().UTC()
-	// month := ttime.Month()
-	// day := ttime.Day() - 1
-	// fmt.Println(int(month), int(day))
-	// fmt.Println("Week of ", int(month), "/", day)
-	// fmt.Printf("%s%d%s%d", "Week of ", int(month), "/", day)
-	// stringAr := []string{"Week of ", strconv.Itoa(int(month)), "/", strconv.Itoa(day), " in ", astroSign}
-	// dateStr := strings.Join(stringAr, "")
-	// fmt.Println(dateStr)
-
+	// we use jinzhu's Now library to calcuate the beginning of the week (i.e. when @poetastrologers post their weekly horoscopes)
 	current := now.BeginningOfWeek()
 	month := current.Month()
 	day := current.Day()
+
+	// join strings from slice
 	stringAr := []string{"Week of ", strconv.Itoa(int(month)), "/", strconv.Itoa(day), " in ", astroSign}
 	dateStr := strings.Join(stringAr, "")
 
@@ -96,7 +94,7 @@ func main() {
 		os.Exit(2)
 	}
 
-	// send request
+	// set url
 	value := url.Values{}
 	value.Set("count", numTweets)
 	value.Set("screen_name", twitterAccount)
@@ -106,24 +104,28 @@ func main() {
 		os.Exit(2)
 	}
 
+	// send request
 	response, err := client.SendRequest(request)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Couldn't send request: %v\n", err)
 		os.Exit(2)
 	}
 
-	// get response
+	// parse response
 	results := &twittergo.Timeline{}
 	if err := response.Parse(results); err != nil {
 		fmt.Fprintf(os.Stderr, "Couldn't parse response: %v\n", err)
 		os.Exit(2)
 	}
 
+	// encode json from response
 	for _, value := range *results {
 		if tweet, err = json.Marshal(*results); err != nil {
 			fmt.Fprintf(os.Stderr, "Couldn't encode tweets: %v\n", err)
 			os.Exit(2)
 		}
+
+		// compare string from tweet.Text() to date, print resulting tweet
 		if (strings.Contains(value.Text(), dateStr)) == true {
 			fmt.Println(value.Text())
 		}
