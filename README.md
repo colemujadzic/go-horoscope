@@ -1,15 +1,19 @@
 # go-horoscope
+
+[![Travis CI](https://img.shields.io/travis/colemujadzic/go-horoscope.svg?style=for-the-badge)](https://travis-ci.org/colemujadzic/go-horoscope)
+
 Get your daily horoscope with this command-line tool, written in Go
 
 ## Installation
 
-
 #### Via Go
+
 ```console
 $ go get github.com/colemujadzic/go-horoscope
 ```
 
 ## Usage
+
 ```console
 $ go-horoscope -h
 
