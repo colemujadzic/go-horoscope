@@ -1,0 +1,19 @@
+language: go
+sudo: false
+go:
+- 1.10x
+before_install:
+- go get github.com/kurrik/oauth1a
+- go get github.com/kurrik/twittergo
+jobs:
+  include:
+  - script: make all
+    deploy:
+      provider: releases
+      skip_cleanup: true
+      on:
+        tags: true
+env:
+  global:
+  - secure: Eb1nLhnwngs9xgzBgQ/f56t9JwTURZ+VS2B+z9x9/vVSnd6NMBCFqQcupmMfL4AY7deapcq5vC8PZYUBxgsPKkOub9HgAoqCHfkb6pcQYHUhTB7NHzezhOI5/IcSe6b6hdWVCrC8MZiTsLIggD4YzhTLWQsqvyJjl9tghJ0T7qiIOetNuQgv6CuEA+QUSbDXK1IlX7+q06JUcyIlk85Pq9iSkiyJZ3bXrnUBpEj+0hFs+9d5V9DAAfxfHSuvCCZqzNTRMMmp9GnENkQKJTiVgnEUXCDNwjT/qLh48TREMMig/jib+rwyDFVYXDITPwiip01a+L5jhM3bD/+w1a7YxPnGXb8yBOK9ixbIzoSN4888tDtfC6b9yj9VtfuEyLHRfU+LZpJGTXbDe09rdLe1AKP4Ez2XNHeMDuZoq0MaX7lfU1xRVt5S089gym94loFZ4Baf1zyLCH+q3/tS6mCOj0epbISwf5eTqk1Psx4C879GF/198avgQJUfP8KwhmIwQbbVF/yHiE3OsKzcfdxX64CNaOr4lu4FQ3pv2JWbygPXL4mLp/pCRHJS2+dyszZDkFdSQGLw0UBl59uEf0KgsTw6prPqIhBu5B99VYg2aEilLc7KCCHUMlaoabj5NBzmcqT6nqAApYuXxYoFTcGP97FTStad4eHjMRjUEgskgSA=
+  - secure: TySeXj5AYAAyOIwDwUz9yZHxR1C/0YGyN82y85wl8H55/l194mfq+ch7X7GpQlnGTL8vAjSC1HD8G3m8eYGwI7tJCT2ki+9QIQAstlTNrA7GjSiuDCTYTB8h3/dZUEbVMKK6CAzYLQhECO+cRYj2wc7eQCfNoJtQ0XpthdzVfrW29gn8aAfI3gvBlTyMm93G5OLi4AP9maTLG6tBTWe3zOm9jyGCI0AbJ+/adJZqJ7Ir4GtrGWAH1GZCSRCGdiv593GPgaWhTTJfE6lGtky/YbKiSjhE4rRKVU4r3mmmGDE5EFt0p8o8UIiHdVAVOjistoCj9vQ5Peyn0iiFPGQuYioe6TMhsE/WtqRt9upqAXtfMXGA4m1fABNqP89SzEUcPlP6YjEg8/qJUcYD0zfEvOI5ty1ca2E6p5yiNJRlIdVgGqp58HYreJP9uvI5DnfL6fudPdTAcWuLFBPYPEG6cCgpIGfs5AyEPXk8yEBAzfchYJOPrbGQ59adwTmY6pgnzB6lvBb2hLu+dU0yrv29ff70znHhCzDeVayR0wWc5SRUmKIJSMxVyaD5vzwhe2xUkDi5PFv0lu4ZJC+2zYIMpJTs8U6bAJGIIFCnzmXMITTKmldRUVPBrJ8p+ND1QKafzGXla2vQ3DHwyz/sMjllcSh95lrCswv/5zH5K8lAMd0=
