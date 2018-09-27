@@ -35,8 +35,8 @@ func init() {
 	signs := []string{"Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"}
 
 	// declare flags for consumer key & secret (hint: register for a developer account at Twitter to receive keys)
-	flag.StringVar(&twitterConsumerKey, "consumer-key", "", "Twitter consumer key")
-	flag.StringVar(&twitterConsumerSecret, "consumer-secret", "", "Twitter consumer secret")
+	flag.StringVar(&twitterConsumerKey, "consumer-key", os.Getenv("CONSUMER_KEY"), "Twitter consumer key")
+	flag.StringVar(&twitterConsumerSecret, "consumer-secret", os.Getenv("CONSUMER_KEY"), "Twitter consumer secret")
 
 	// print usage information when -h or -help flag is invoked
 	flag.Usage = func() {
